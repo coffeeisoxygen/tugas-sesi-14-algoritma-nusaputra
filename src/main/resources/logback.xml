@@ -37,7 +37,7 @@
     </appender>
 
     <!-- Enable debug for com.coffeecode package -->
-    <logger name="com.coffeecode" level="DEBUG"/>
+    <logger name="com.coffeecode" level="INFO"/>
 
     <!-- Root Logger -->
     <root level="INFO">
