@@ -3,4 +3,7 @@ com\coffeecode\model\Word.class
 com\coffeecode\exception\CustomException.class
 com\coffeecode\repository\DictionaryRepository.class
 com\coffeecode\loader\JsonDictionaryLoader.class
+com\coffeecode\search\BinarySearch.class
+com\coffeecode\search\Searchable.class
+com\coffeecode\search\SearchType.class
 com\coffeecode\loader\DictionaryLoader.class

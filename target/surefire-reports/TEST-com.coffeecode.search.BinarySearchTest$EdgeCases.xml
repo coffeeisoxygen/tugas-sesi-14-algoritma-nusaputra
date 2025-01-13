@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.coffeecode.repository.DictionaryRepositoryTest" time="0.395" tests="3" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.coffeecode.search.BinarySearchTest$EdgeCases" time="0.259" tests="3" errors="2" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="23"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -16,9 +16,9 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="F:\packages\java\OpenJDK-23\bin"/>
-    <property name="sun.java.command" value="C:\Users\YOGA\AppData\Local\Temp\surefire2752118378428408585\surefirebooter-20250113083719910_3.jar C:\Users\YOGA\AppData\Local\Temp\surefire2752118378428408585 2025-01-13T08-37-19_794-jvmRun1 surefire-20250113083719910_1tmp surefire_0-20250113083719910_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\YOGA\AppData\Local\Temp\surefire13194057444245331419\surefirebooter-20250113090305292_3.jar C:\Users\YOGA\AppData\Local\Temp\surefire13194057444245331419 2025-01-13T09-03-05_182-jvmRun1 surefire-20250113090305292_1tmp surefire_0-20250113090305292_2tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="test" value="com.coffeecode.repository.DictionaryRepositoryTest"/>
+    <property name="test" value="com.coffeecode.search.BinarySearchTest"/>
     <property name="surefire.test.class.path" value="F:\Tugas-campus\binary-search\target\test-classes;F:\Tugas-campus\binary-search\target\classes;C:\Users\YOGA\.m2\repository\org\slf4j\slf4j-api\2.0.9\slf4j-api-2.0.9.jar;C:\Users\YOGA\.m2\repository\ch\qos\logback\logback-classic\1.4.12\logback-classic-1.4.12.jar;C:\Users\YOGA\.m2\repository\ch\qos\logback\logback-core\1.4.12\logback-core-1.4.12.jar;C:\Users\YOGA\.m2\repository\org\projectlombok\lombok\1.18.30\lombok-1.18.30.jar;C:\Users\YOGA\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.2\jackson-databind-2.15.2.jar;C:\Users\YOGA\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.2\jackson-annotations-2.15.2.jar;C:\Users\YOGA\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.2\jackson-core-2.15.2.jar;C:\Users\YOGA\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.0\junit-jupiter-5.10.0.jar;C:\Users\YOGA\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.0\junit-jupiter-api-5.10.0.jar;C:\Users\YOGA\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\YOGA\.m2\repository\org\junit\platform\junit-platform-commons\1.10.0\junit-platform-commons-1.10.0.jar;C:\Users\YOGA\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\YOGA\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.0\junit-jupiter-params-5.10.0.jar;C:\Users\YOGA\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.0\junit-jupiter-engine-5.10.0.jar;C:\Users\YOGA\.m2\repository\org\junit\platform\junit-platform-engine\1.10.0\junit-platform-engine-1.10.0.jar;C:\Users\YOGA\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\YOGA\.m2\repository\net\bytebuddy\byte-buddy\1.12.21\byte-buddy-1.12.21.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\YOGA"/>
@@ -32,7 +32,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\YOGA\AppData\Local\Temp\surefire2752118378428408585\surefirebooter-20250113083719910_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\YOGA\AppData\Local\Temp\surefire13194057444245331419\surefirebooter-20250113090305292_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="23+37-2369"/>
@@ -61,67 +61,73 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="67.0"/>
   </properties>
-  <testcase name="shouldInitializeWithValidData" classname="com.coffeecode.repository.DictionaryRepositoryTest" time="0.369">
+  <testcase name="shouldHandleNullArray" classname="com.coffeecode.search.BinarySearchTest$EdgeCases" time="0.221">
+    <error message="Cannot read the array length because &quot;dictionary&quot; is null" type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException: Cannot read the array length because "dictionary" is null
+	at com.coffeecode.search.BinarySearch.search(BinarySearch.java:16)
+	at com.coffeecode.search.BinarySearchTest$EdgeCases.shouldHandleNullArray(BinarySearchTest.java:80)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></error>
     <system-out><![CDATA[virtual THREAD FACTORY
-08:37:20,521 |-INFO in ch.qos.logback.classic.LoggerContext[default] - This is logback-classic version 1.4.12
-08:37:20,522 |-INFO in ch.qos.logback.classic.util.ContextInitializer@2a3888c1 - No custom configurators were discovered as a service.
-08:37:20,522 |-INFO in ch.qos.logback.classic.util.ContextInitializer@2a3888c1 - Trying to configure with ch.qos.logback.classic.joran.SerializedModelConfigurator
-08:37:20,523 |-INFO in ch.qos.logback.classic.util.ContextInitializer@2a3888c1 - Constructed configurator of type class ch.qos.logback.classic.joran.SerializedModelConfigurator
-08:37:20,528 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.scmo]
-08:37:20,528 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.scmo]
-08:37:20,533 |-INFO in ch.qos.logback.classic.util.ContextInitializer@2a3888c1 - ch.qos.logback.classic.joran.SerializedModelConfigurator.configure() call lasted 6 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
-08:37:20,533 |-INFO in ch.qos.logback.classic.util.ContextInitializer@2a3888c1 - Trying to configure with ch.qos.logback.classic.util.DefaultJoranConfigurator
-08:37:20,537 |-INFO in ch.qos.logback.classic.util.ContextInitializer@2a3888c1 - Constructed configurator of type class ch.qos.logback.classic.util.DefaultJoranConfigurator
-08:37:20,539 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
-08:37:20,543 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [file:/F:/Tugas-campus/binary-search/target/classes/logback.xml]
-08:37:20,614 |-INFO in ch.qos.logback.classic.model.processor.ConfigurationModelHandlerFull - Registering a new ReconfigureOnChangeTask ReconfigureOnChangeTask(born:1736732240613)
-08:37:20,615 |-INFO in ch.qos.logback.classic.model.processor.ConfigurationModelHandlerFull - Will scan for changes in [file:/F:/Tugas-campus/binary-search/target/classes/logback.xml] 
-08:37:20,615 |-INFO in ch.qos.logback.classic.model.processor.ConfigurationModelHandlerFull - Setting ReconfigureOnChangeTask scanning period to 30 seconds
-08:37:20,619 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [Console]
-08:37:20,619 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
-08:37:20,623 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
-08:37:20,645 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [RollingFile]
-08:37:20,645 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
-08:37:20,649 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
-08:37:20,655 |-INFO in c.q.l.core.rolling.SizeAndTimeBasedRollingPolicy@1097324923 - setting totalSizeCap to 1 GB
-08:37:20,656 |-INFO in c.q.l.core.rolling.SizeAndTimeBasedRollingPolicy@1097324923 - Archive files will be limited to [10 MB] each.
-08:37:20,658 |-INFO in c.q.l.core.rolling.SizeAndTimeBasedRollingPolicy@1097324923 - Will use gz compression
-08:37:20,660 |-INFO in c.q.l.core.rolling.SizeAndTimeBasedRollingPolicy@1097324923 - Will use the pattern logs/archive/%d{yyyy-MM-dd}/application-%d{yyyy-MM-dd}-%i.log for the active file
-08:37:20,664 |-INFO in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@14fa86ae - The date pattern is 'yyyy-MM-dd' from file name pattern 'logs/archive/%d{yyyy-MM-dd}/application-%d{yyyy-MM-dd}-%i.log.gz'.
-08:37:20,664 |-INFO in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@14fa86ae - Roll-over at midnight.
-08:37:20,665 |-INFO in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@14fa86ae - Setting initial period to 2025-01-13T01:37:18.165Z
-08:37:20,666 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[RollingFile] - Active log file name: logs/application.log
-08:37:20,667 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[RollingFile] - File property is set to [logs/application.log]
-08:37:20,667 |-WARN in ch.qos.logback.core.model.processor.AppenderModelHandler - Appender named [Async] not referenced. Skipping further processing.
-08:37:20,668 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [com.coffeecode] to DEBUG
-08:37:20,668 |-INFO in ch.qos.logback.classic.model.processor.RootLoggerModelHandler - Setting level of ROOT logger to INFO
-08:37:20,668 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [Console] to Logger[ROOT]
-08:37:20,668 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [RollingFile] to Logger[ROOT]
-08:37:20,668 |-INFO in ch.qos.logback.core.model.processor.DefaultProcessor@6e15fe2 - End of configuration.
-08:37:20,670 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@68f1b17f - Registering current configuration as safe fallback point
-08:37:20,670 |-INFO in ch.qos.logback.classic.util.ContextInitializer@2a3888c1 - ch.qos.logback.classic.util.DefaultJoranConfigurator.configure() call lasted 133 milliseconds. ExecutionStatus=DO_NOT_INVOKE_NEXT_IF_ANY
+09:03:06,018 |-INFO in ch.qos.logback.classic.LoggerContext[default] - This is logback-classic version 1.4.12
+09:03:06,019 |-INFO in ch.qos.logback.classic.util.ContextInitializer@490caf5f - No custom configurators were discovered as a service.
+09:03:06,019 |-INFO in ch.qos.logback.classic.util.ContextInitializer@490caf5f - Trying to configure with ch.qos.logback.classic.joran.SerializedModelConfigurator
+09:03:06,020 |-INFO in ch.qos.logback.classic.util.ContextInitializer@490caf5f - Constructed configurator of type class ch.qos.logback.classic.joran.SerializedModelConfigurator
+09:03:06,024 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.scmo]
+09:03:06,024 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.scmo]
+09:03:06,039 |-INFO in ch.qos.logback.classic.util.ContextInitializer@490caf5f - ch.qos.logback.classic.joran.SerializedModelConfigurator.configure() call lasted 6 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+09:03:06,039 |-INFO in ch.qos.logback.classic.util.ContextInitializer@490caf5f - Trying to configure with ch.qos.logback.classic.util.DefaultJoranConfigurator
+09:03:06,040 |-INFO in ch.qos.logback.classic.util.ContextInitializer@490caf5f - Constructed configurator of type class ch.qos.logback.classic.util.DefaultJoranConfigurator
+09:03:06,040 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+09:03:06,043 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [file:/F:/Tugas-campus/binary-search/target/classes/logback.xml]
+09:03:06,117 |-INFO in ch.qos.logback.classic.model.processor.ConfigurationModelHandlerFull - Registering a new ReconfigureOnChangeTask ReconfigureOnChangeTask(born:1736733786116)
+09:03:06,118 |-INFO in ch.qos.logback.classic.model.processor.ConfigurationModelHandlerFull - Will scan for changes in [file:/F:/Tugas-campus/binary-search/target/classes/logback.xml] 
+09:03:06,118 |-INFO in ch.qos.logback.classic.model.processor.ConfigurationModelHandlerFull - Setting ReconfigureOnChangeTask scanning period to 30 seconds
+09:03:06,122 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [Console]
+09:03:06,122 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+09:03:06,127 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+09:03:06,147 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [RollingFile]
+09:03:06,147 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+09:03:06,150 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+09:03:06,163 |-INFO in c.q.l.core.rolling.SizeAndTimeBasedRollingPolicy@1664598529 - setting totalSizeCap to 1 GB
+09:03:06,164 |-INFO in c.q.l.core.rolling.SizeAndTimeBasedRollingPolicy@1664598529 - Archive files will be limited to [10 MB] each.
+09:03:06,165 |-INFO in c.q.l.core.rolling.SizeAndTimeBasedRollingPolicy@1664598529 - Will use gz compression
+09:03:06,166 |-INFO in c.q.l.core.rolling.SizeAndTimeBasedRollingPolicy@1664598529 - Will use the pattern logs/archive/%d{yyyy-MM-dd}/application-%d{yyyy-MM-dd}-%i.log for the active file
+09:03:06,169 |-INFO in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@5c669da8 - The date pattern is 'yyyy-MM-dd' from file name pattern 'logs/archive/%d{yyyy-MM-dd}/application-%d{yyyy-MM-dd}-%i.log.gz'.
+09:03:06,169 |-INFO in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@5c669da8 - Roll-over at midnight.
+09:03:06,170 |-INFO in ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP@5c669da8 - Setting initial period to 2025-01-13T02:03:03.245Z
+09:03:06,172 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[RollingFile] - Active log file name: logs/application.log
+09:03:06,172 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[RollingFile] - File property is set to [logs/application.log]
+09:03:06,173 |-WARN in ch.qos.logback.core.model.processor.AppenderModelHandler - Appender named [Async] not referenced. Skipping further processing.
+09:03:06,174 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [com.coffeecode] to DEBUG
+09:03:06,174 |-INFO in ch.qos.logback.classic.model.processor.RootLoggerModelHandler - Setting level of ROOT logger to INFO
+09:03:06,174 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [Console] to Logger[ROOT]
+09:03:06,174 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [RollingFile] to Logger[ROOT]
+09:03:06,174 |-INFO in ch.qos.logback.core.model.processor.DefaultProcessor@31920ade - End of configuration.
+09:03:06,175 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@1d483de4 - Registering current configuration as safe fallback point
+09:03:06,175 |-INFO in ch.qos.logback.classic.util.ContextInitializer@490caf5f - ch.qos.logback.classic.util.DefaultJoranConfigurator.configure() call lasted 135 milliseconds. ExecutionStatus=DO_NOT_INVOKE_NEXT_IF_ANY
 
-08:37:20.770 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.c.loader.JsonDictionaryLoader&amp#27;[0;39m - JsonDictionaryLoader initialized
-08:37:20.771 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.c.repository.DictionaryRepository&amp#27;[0;39m - DictionaryRepository created with loader: JsonDictionaryLoader
-08:37:20.777 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.c.repository.DictionaryRepository&amp#27;[0;39m - Initializing dictionary from source: /data/wordsdictionary.json
-08:37:20.777 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.c.loader.JsonDictionaryLoader&amp#27;[0;39m - Loading dictionary from: /data/wordsdictionary.json
-08:37:20.849 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.c.loader.JsonDictionaryLoader&amp#27;[0;39m - Successfully loaded 52 words
-08:37:20.849 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.c.repository.DictionaryRepository&amp#27;[0;39m - Dictionary initialized with 52 words
+09:03:06.180 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mcom.coffeecode.search.BinarySearch&amp#27;[0;39m - Performing binary search for 'test' using ENGLISH
 ]]></system-out>
   </testcase>
-  <testcase name="shouldThrowExceptionForInvalidSource" classname="com.coffeecode.repository.DictionaryRepositoryTest" time="0.005">
-    <system-out><![CDATA[08:37:20.857 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.c.loader.JsonDictionaryLoader&amp#27;[0;39m - JsonDictionaryLoader initialized
-08:37:20.857 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.c.repository.DictionaryRepository&amp#27;[0;39m - DictionaryRepository created with loader: JsonDictionaryLoader
-08:37:20.858 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.c.repository.DictionaryRepository&amp#27;[0;39m - Initializing dictionary from source: /invalid/path.json
-08:37:20.858 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.c.loader.JsonDictionaryLoader&amp#27;[0;39m - Loading dictionary from: /invalid/path.json
-08:37:20.859 [main] &amp#27;[1;31mERROR&amp#27;[0;39m &amp#27;[36mc.c.loader.JsonDictionaryLoader&amp#27;[0;39m - Resource not found: /invalid/path.json
-08:37:20.859 [main] &amp#27;[1;31mERROR&amp#27;[0;39m &amp#27;[36mc.c.repository.DictionaryRepository&amp#27;[0;39m - Failed to initialize dictionary - no data loaded
+  <testcase name="shouldHandleNullSearchTerm" classname="com.coffeecode.search.BinarySearchTest$EdgeCases" time="0.009">
+    <error message="Cannot read field &quot;value&quot; because &quot;anotherString&quot; is null" type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException: Cannot read field "value" because "anotherString" is null
+	at java.base/java.lang.String.compareTo(String.java:2131)
+	at com.coffeecode.search.BinarySearch.search(BinarySearch.java:24)
+	at com.coffeecode.search.BinarySearchTest$EdgeCases.shouldHandleNullSearchTerm(BinarySearchTest.java:86)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></error>
+    <system-out><![CDATA[09:03:06.199 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mcom.coffeecode.search.BinarySearch&amp#27;[0;39m - Performing binary search for 'null' using ENGLISH
 ]]></system-out>
   </testcase>
-  <testcase name="shouldThrowExceptionWhenUninitialized" classname="com.coffeecode.repository.DictionaryRepositoryTest" time="0.002">
-    <system-out><![CDATA[08:37:20.863 [main] &amp#27;[34mINFO &amp#27;[0;39m &amp#27;[36mc.c.loader.JsonDictionaryLoader&amp#27;[0;39m - JsonDictionaryLoader initialized
-08:37:20.863 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mc.c.repository.DictionaryRepository&amp#27;[0;39m - DictionaryRepository created with loader: JsonDictionaryLoader
-08:37:20.864 [main] &amp#27;[1;31mERROR&amp#27;[0;39m &amp#27;[36mc.c.repository.DictionaryRepository&amp#27;[0;39m - Attempted to access uninitialized dictionary
+  <testcase name="shouldHandleEmptyArray" classname="com.coffeecode.search.BinarySearchTest$EdgeCases" time="0.006">
+    <system-out><![CDATA[09:03:06.207 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mcom.coffeecode.search.BinarySearch&amp#27;[0;39m - Performing binary search for 'test' using ENGLISH
+09:03:06.207 [main] &amp#27;[39mDEBUG&amp#27;[0;39m &amp#27;[36mcom.coffeecode.search.BinarySearch&amp#27;[0;39m - 'test' not found in dictionary
 ]]></system-out>
   </testcase>
 </testsuite>

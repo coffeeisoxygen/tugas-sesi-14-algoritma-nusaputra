@@ -40,18 +40,18 @@ public class App {
         logger.info("----------------------------------------");
         logger.info("  #  English         Indonesian");
         logger.info("----------------------------------------");
-        
+
         for (int i = 0; i < Math.min(5, dictionary.length); i++) {
             Word word = dictionary[i];
-            logger.info(String.format("%3d. %-15s - %s", 
+            logger.info(String.format("%3d. %-15s - %s",
                     i + 1,
                     word.english(),
                     word.indonesian()));
         }
-        
+
         logger.info("----------------------------------------");
-        logger.info("Showing {} of {} entries", 
-                Math.min(5, dictionary.length), 
+        logger.info("Showing {} of {} entries",
+                Math.min(5, dictionary.length),
                 dictionary.length);
     }
 }
