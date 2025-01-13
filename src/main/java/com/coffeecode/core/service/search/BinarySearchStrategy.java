@@ -15,51 +15,77 @@ import com.coffeecode.core.models.Language;
 public class BinarySearchStrategy implements SearchStrategy {
     private static final Logger logger = LoggerFactory.getLogger(BinarySearchStrategy.class);
     private static final Marker PERFORMANCE = MarkerFactory.getMarker("PERFORMANCE");
-    private List<String> steps;
+    private static final Marker OPERATION = MarkerFactory.getMarker("OPERATION");
 
     @Override
     public SearchResult search(List<DictionaryEntry> entries, String word, Language language) {
+        long startTime = System.currentTimeMillis();
+        int comparisons = 0;
+        List<String> steps = new ArrayList<>();
 
-        logger.debug("Starting binary search for '{}' in {} entries", word, entries.size());
-        steps = new ArrayList<>();
-        steps.add(String.format("Starting binary search for: %s", word));
+        try {
+            logger.info(OPERATION, "Starting binary search - Word: '{}', Language: {}, Entries: {}", 
+                word, language, entries.size());
+            steps.add(String.format("Starting binary search for: %s", word));
 
-        // Sort entries in a case-insensitive manner based on the specified language
-        entries.sort((entry1, entry2) -> getWord(entry1, language).toLowerCase()
-                .compareTo(getWord(entry2, language).toLowerCase()));
+            entries.sort((entry1, entry2) -> getWord(entry1, language).toLowerCase()
+                    .compareTo(getWord(entry2, language).toLowerCase()));
+            logger.debug(OPERATION, "Entries sorted by {}", language);
 
-        int left = 0;
-        int right = entries.size() - 1;
+            int left = 0;
+            int right = entries.size() - 1;
 
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            DictionaryEntry midEntry = entries.get(mid);
-            String midWord = getWord(midEntry, language);
+            while (left <= right) {
+                comparisons++;
+                int mid = left + (right - left) / 2;
+                DictionaryEntry midEntry = entries.get(mid);
+                String midWord = getWord(midEntry, language);
 
-            steps.add(String.format("Comparing with index %d: %s", mid, midWord));
-            logger.trace("Comparing '{}' with '{}' at index {}", word, midWord, mid);
+                steps.add(String.format("Comparing with index %d: %s", mid, midWord));
+                logger.debug(OPERATION, "Comparison #{} at index {} - '{}' with '{}'", 
+                    comparisons, mid, word.toLowerCase(), midWord.toLowerCase());
 
-            // Case insensitive comparison
-            int comparison = word.toLowerCase().compareTo(midWord.toLowerCase());
+                int comparison = word.toLowerCase().compareTo(midWord.toLowerCase());
 
-            if (comparison == 0) {
-                steps.add("Word found!");
-                logger.debug("Search completed. Word was found");
-                return new SearchResult(Optional.of(midEntry), steps);
+                if (comparison == 0) {
+                    logSuccess(startTime, comparisons, mid);
+                    steps.add("Word found!");
+                    return new SearchResult(Optional.of(midEntry), steps);
+                }
+
+                if (comparison > 0) {
+                    steps.add("Moving to right half");
+                    logger.debug(OPERATION, "Moving right: {} > {}", word, midWord);
+                    left = mid + 1;
+                } else {
+                    steps.add("Moving to left half");
+                    logger.debug(OPERATION, "Moving left: {} < {}", word, midWord);
+                    right = mid - 1;
+                }
             }
 
-            if (comparison > 0) {
-                steps.add("Moving to right half");
-                left = mid + 1;
-            } else {
-                steps.add("Moving to left half");
-                right = mid - 1;
-            }
+            logNotFound(startTime, comparisons, word);
+            steps.add("Word not found");
+            return new SearchResult(Optional.empty(), steps);
+
+        } catch (Exception e) {
+            logger.error("Search failed - Word: {}, Language: {}", word, language, e);
+            throw e;
         }
+    }
 
-        steps.add("Word not found");
-        logger.debug("Search completed. Word was not found");
-        return new SearchResult(Optional.empty(), steps);
+    private void logSuccess(long startTime, int comparisons, int foundIndex) {
+        long duration = System.currentTimeMillis() - startTime;
+        logger.info(PERFORMANCE, "Search successful - Duration: {}ms, Comparisons: {}", 
+            duration, comparisons);
+        logger.info(OPERATION, "Word found at index: {}", foundIndex);
+    }
+
+    private void logNotFound(long startTime, int comparisons, String word) {
+        long duration = System.currentTimeMillis() - startTime;
+        logger.info(PERFORMANCE, "Search completed - Duration: {}ms, Comparisons: {}", 
+            duration, comparisons);
+        logger.info(OPERATION, "Word not found: '{}'", word);
     }
 
     private String getWord(DictionaryEntry entry, Language language) {
