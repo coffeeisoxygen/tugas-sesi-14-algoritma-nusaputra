@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,6 +22,8 @@ public class VisualizationPanel extends JPanel {
     private static final Color COMPARE_COLOR = Color.YELLOW;
     private static final Color FOUND_COLOR = Color.GREEN;
     private static final Color NOT_FOUND_COLOR = Color.RED;
+    private static final int ANIMATION_DELAY = 800; // ms
+    private volatile boolean isAnimating = false;
 
     private List<String> currentSteps;
     private int currentStep;
@@ -35,24 +39,58 @@ public class VisualizationPanel extends JPanel {
     }
 
     private void setupTimer() {
-        animationTimer = new Timer(1000, e -> {
-            if (currentSteps != null && currentStep < currentSteps.size() - 1) {
+        animationTimer = new Timer(ANIMATION_DELAY, e -> {
+            if (!isAnimating || currentSteps == null) {
+                stopAnimation();
+                return;
+            }
+            
+            if (currentStep < currentSteps.size() - 1) {
                 currentStep++;
                 repaint();
             } else {
-                ((Timer) e.getSource()).stop();
+                stopAnimation();
             }
         });
+        animationTimer.setRepeats(true);
     }
 
     public void updateSearchVisualization(List<String> steps) {
-        this.currentSteps = steps;
-        this.currentStep = 0;
-        this.boxColors = new Color[10]; // Assuming 10 elements for demo
-        for (int i = 0; i < boxColors.length; i++) {
-            boxColors[i] = NORMAL_COLOR;
+        stopAnimation();
+        clearVisualization();
+        
+        if (steps == null || steps.isEmpty()) {
+            return;
         }
+
+        this.currentSteps = new ArrayList<>(steps);
+        this.currentStep = 0;
+        this.boxColors = new Color[10];
+        Arrays.fill(boxColors, NORMAL_COLOR);
+        
+        startAnimation();
+    }
+
+    private void startAnimation() {
+        isAnimating = true;
         animationTimer.restart();
+        repaint();
+    }
+
+    private void stopAnimation() {
+        isAnimating = false;
+        animationTimer.stop();
+    }
+
+    void clearVisualization() {
+        currentSteps = null;
+        currentStep = 0;
+        leftPointer = -1;
+        rightPointer = -1;
+        midPointer = -1;
+        if (boxColors != null) {
+            Arrays.fill(boxColors, NORMAL_COLOR);
+        }
         repaint();
     }
 

@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 
 import com.coffeecode.core.events.DictionaryEvent;
 import com.coffeecode.core.events.DictionaryEventListener;
@@ -22,12 +23,13 @@ import com.coffeecode.core.service.BinarySearchDictionaryService;
 import com.coffeecode.core.service.search.SearchResult;
 
 public class MainUI extends JFrame implements DictionaryEventListener {
-    private final BinarySearchDictionaryService service;
+    private final transient BinarySearchDictionaryService service;
     private final JTextField searchField;
     private final JComboBox<Language> languageCombo;
     private final JTextArea stepsArea;
     private final JLabel resultLabel;
     private final VisualizationPanel visualizationPanel;
+    private final JButton searchButton;
 
     public MainUI() {
         service = new BinarySearchDictionaryService();
@@ -41,7 +43,7 @@ public class MainUI extends JFrame implements DictionaryEventListener {
         JPanel searchPanel = new JPanel(new BorderLayout(5, 5));
         searchField = new JTextField(20);
         languageCombo = new JComboBox<>(Language.values());
-        JButton searchButton = new JButton("Search");
+        searchButton = new JButton("Search");
 
         JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         inputPanel.add(new JLabel("Search:"));
@@ -89,9 +91,31 @@ public class MainUI extends JFrame implements DictionaryEventListener {
             return;
         }
 
+        // Clear previous search
+        visualizationPanel.clearVisualization();
+        stepsArea.setText("");
+        resultLabel.setText("Searching...");
+        
+        // Disable search until complete
+        searchButton.setEnabled(false);
+        
         // Subscribe to events
         DictionaryEventPublisher.subscribe(this);
-        service.searchWord(word, language);
+        
+        // Perform search in background
+        SwingWorker<Void, Void> worker = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() {
+                service.searchWord(word, language);
+                return null;
+            }
+            
+            @Override
+            protected void done() {
+                searchButton.setEnabled(true);
+            }
+        };
+        worker.execute();
     }
 
     @Override
