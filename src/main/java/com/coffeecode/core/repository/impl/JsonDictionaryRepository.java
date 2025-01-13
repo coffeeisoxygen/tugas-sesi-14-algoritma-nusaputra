@@ -33,8 +33,9 @@ public class JsonDictionaryRepository implements DictionaryRepository {
 
             return wrapper.getDictionary();
         } catch (IOException e) {
-            logger.error("Failed to load dictionary", e);
-            throw new CustomException("Failed to load dictionary", e);
+            String errorMessage = "Failed to load dictionary from file: " + AppConfig.JSON_RESOURCE_PATH;
+            logger.error(errorMessage, e);
+            throw new CustomException(errorMessage, e);
         }
     }
 
