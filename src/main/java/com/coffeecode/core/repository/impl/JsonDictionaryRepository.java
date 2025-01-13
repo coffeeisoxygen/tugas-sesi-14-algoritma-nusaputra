@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.coffeecode.core.config.AppConfig;
-import com.coffeecode.core.exception.CustomException;
+import com.coffeecode.core.exception.DictionaryException;
 import com.coffeecode.core.models.DictionaryEntry;
 import com.coffeecode.core.models.DictionaryWrapper;
 import com.coffeecode.core.repository.DictionaryRepository;
@@ -26,16 +26,18 @@ public class JsonDictionaryRepository implements DictionaryRepository {
     public List<DictionaryEntry> loadEntries() {
         try {
             File file = new File(AppConfig.JSON_RESOURCE_PATH);
-            logger.info("Loading dictionary from: {}", file.getAbsolutePath());
+            if (!file.exists()) {
+                throw new DictionaryException("Dictionary file not found");
+            }
 
             DictionaryWrapper wrapper = objectMapper.readValue(file, DictionaryWrapper.class);
-            logger.info("Loaded {} entries", wrapper.getDictionary().size());
+            if (wrapper.getDictionary() == null || wrapper.getDictionary().isEmpty()) {
+                throw new DictionaryException("Dictionary is empty");
+            }
 
             return wrapper.getDictionary();
         } catch (IOException e) {
-            String errorMessage = "Failed to load dictionary from file: " + AppConfig.JSON_RESOURCE_PATH;
-            logger.error(errorMessage, e);
-            throw new CustomException(errorMessage, e);
+            throw new DictionaryException(DictionaryException.LOADING_ERROR, e);
         }
     }
 
