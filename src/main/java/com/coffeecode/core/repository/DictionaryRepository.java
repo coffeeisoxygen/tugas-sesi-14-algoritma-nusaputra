@@ -1,15 +1,15 @@
-package com.coffeecode.repository;
+package com.coffeecode.core.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.coffeecode.core.loader.DictionaryLoader;
+import com.coffeecode.core.model.DictionaryEntry;
 import com.coffeecode.exception.CustomException;
-import com.coffeecode.loader.DictionaryLoader;
-import com.coffeecode.model.Word;
 
 public class DictionaryRepository {
     private static final Logger logger = LoggerFactory.getLogger(DictionaryRepository.class);
-    private Word[] dictionary;
+    private DictionaryEntry[] dictionary;
     private final DictionaryLoader loader;
     private boolean isInitialized;
 
@@ -32,7 +32,7 @@ public class DictionaryRepository {
         logger.info("Dictionary initialized with {} words", dictionary.length);
     }
 
-    public Word[] getDictionary() {
+    public DictionaryEntry[] getDictionary() {
         validateInitialization();
         return dictionary;
     }

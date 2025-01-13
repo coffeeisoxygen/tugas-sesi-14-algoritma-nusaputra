@@ -1,7 +1,4 @@
 F:\Tugas-campus\binary-search\src\test\java\com\coffeecode\AppTest.java
-F:\Tugas-campus\binary-search\src\test\java\com\coffeecode\sort\Sortable.java
-F:\Tugas-campus\binary-search\src\test\java\com\coffeecode\repository\DictionaryRepositoryTest.java
-F:\Tugas-campus\binary-search\src\test\java\com\coffeecode\search\BinarySearchTest.java
-F:\Tugas-campus\binary-search\src\test\java\com\coffeecode\loader\JsonDictionaryLoaderTest.java
-F:\Tugas-campus\binary-search\src\test\java\com\coffeecode\model\WordTest.java
-F:\Tugas-campus\binary-search\src\test\java\com\coffeecode\sort\SortTest.java
+F:\Tugas-campus\binary-search\src\test\java\com\coffeecode\core\repository\DictionaryRepositoryTest.java
+F:\Tugas-campus\binary-search\src\test\java\com\coffeecode\core\loader\JsonDictionaryLoaderTest.java
+F:\Tugas-campus\binary-search\src\test\java\com\coffeecode\core\model\DictionaryEntryTest.java

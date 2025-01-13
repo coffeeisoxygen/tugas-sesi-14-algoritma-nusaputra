@@ -3,24 +3,24 @@ package com.coffeecode.sort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.coffeecode.model.Word;
+import com.coffeecode.core.model.DictionaryEntry;
 import com.coffeecode.search.SearchType;
 
 public class MergeSort implements Sortable {
     private static final Logger logger = LoggerFactory.getLogger(MergeSort.class);
 
     @Override
-    public Word[] sort(Word[] dictionary, SearchType type) {
+    public DictionaryEntry[] sort(DictionaryEntry[] dictionary, SearchType type) {
         logger.debug("Sorting dictionary by {}", type);
         if (dictionary == null || dictionary.length <= 1)
             return dictionary;
 
-        Word[] temp = new Word[dictionary.length];
+        DictionaryEntry[] temp = new DictionaryEntry[dictionary.length];
         mergeSort(dictionary, temp, 0, dictionary.length - 1, type);
         return dictionary;
     }
 
-    private void mergeSort(Word[] arr, Word[] temp, int left, int right, SearchType type) {
+    private void mergeSort(DictionaryEntry[] arr, DictionaryEntry[] temp, int left, int right, SearchType type) {
         if (left < right) {
             int mid = left + (right - left) / 2;
             mergeSort(arr, temp, left, mid, type);
@@ -29,7 +29,7 @@ public class MergeSort implements Sortable {
         }
     }
 
-    private void merge(Word[] arr, Word[] temp, int left, int mid, int right, SearchType type) {
+    private void merge(DictionaryEntry[] arr, DictionaryEntry[] temp, int left, int mid, int right, SearchType type) {
         System.arraycopy(arr, left, temp, left, right - left + 1);
 
         int i = left;

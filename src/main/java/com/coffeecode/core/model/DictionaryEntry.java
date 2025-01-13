@@ -1,7 +1,7 @@
-package com.coffeecode.model;
+package com.coffeecode.core.model;
 
-public record Word(String english, String indonesian) {
-    public Word {
+public record DictionaryEntry(String english, String indonesian) {
+    public DictionaryEntry {
         if (english == null || english.trim().isEmpty()) {
             throw new IllegalArgumentException("English word cannot be empty");
         }

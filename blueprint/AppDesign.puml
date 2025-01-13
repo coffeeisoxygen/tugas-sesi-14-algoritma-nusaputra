@@ -1,0 +1,70 @@
+@startuml "Dictionary Search Flow"
+
+skinparam backgroundColor #FFFFFF
+skinparam sequence {
+    ArrowColor DeepSkyBlue
+    ActorBorderColor DeepSkyBlue
+    LifeLineBorderColor blue
+    LifeLineBackgroundColor #A9DCDF
+    
+    ParticipantBorderColor DeepSkyBlue
+    ParticipantBackgroundColor DodgerBlue
+    ParticipantFontName Impact
+    ParticipantFontSize 17
+    ParticipantFontColor #A9DCDF
+}
+
+actor User
+participant "DictionaryApp" as App
+participant "JsonLoader" as Loader
+participant "DataValidator" as Validator
+participant "MergeSort" as Sorter
+participant "BinarySearch" as Searcher
+
+== Data Loading Phase ==
+User -> App: start application
+App -> Loader: loadDictionary()
+activate Loader
+    
+alt Successful load
+    Loader --> App: return Word[]
+else Failed load
+    Loader --> App: throw LoadException
+end
+deactivate Loader
+
+== Validation Phase ==
+App -> Validator: validateData(Word[])
+activate Validator
+    
+alt Valid data
+    Validator --> App: return true
+else Invalid data
+    Validator --> App: throw ValidationException
+end
+deactivate Validator
+
+== Sort Phase ==
+App -> Sorter: sort(Word[], type)
+activate Sorter
+Sorter --> App: return sorted Word[]
+deactivate Sorter
+
+== Search Ready ==
+App --> User: display "Ready for search"
+
+== Search Phase ==
+User -> App: search(word)
+App -> Searcher: binarySearch(Word[], target)
+activate Searcher
+
+alt Word found
+    Searcher --> App: return index
+    App --> User: show result
+else Word not found
+    Searcher --> App: return -1
+    App --> User: show "Not found"
+end
+deactivate Searcher
+
+@enduml

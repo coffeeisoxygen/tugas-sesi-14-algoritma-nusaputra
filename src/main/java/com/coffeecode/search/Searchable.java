@@ -1,6 +1,6 @@
 package com.coffeecode.search;
 
-import com.coffeecode.model.Word;
+import com.coffeecode.core.model.DictionaryEntry;
 
 public interface Searchable {
     /**
@@ -11,5 +11,5 @@ public interface Searchable {
      * @param type       Type of search (ENGLISH or INDONESIAN)
      * @return index of found word, -1 if not found
      */
-    int search(Word[] dictionary, String target, SearchType type);
+    int search(DictionaryEntry[] dictionary, String target, SearchType type);
 }

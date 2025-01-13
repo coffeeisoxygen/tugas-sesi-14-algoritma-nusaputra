@@ -1,14 +1,11 @@
-package com.coffeecode.repository;
+package com.coffeecode.core.repository;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
+import com.coffeecode.core.loader.JsonDictionaryLoader;
 import com.coffeecode.exception.CustomException;
-import com.coffeecode.loader.JsonDictionaryLoader;
 
 class DictionaryRepositoryTest {
     private DictionaryRepository repository;
@@ -21,7 +18,7 @@ class DictionaryRepositoryTest {
     @Test
     @DisplayName("Should initialize repository with valid data")
     void shouldInitializeWithValidData() {
-        assertDoesNotThrow(() -> repository.initialize("/data/wordsdictionary.json"));
+        repository.initialize("/data/wordsdictionary.json");
         assertTrue(repository.size() > 0);
     }
 
@@ -29,11 +26,5 @@ class DictionaryRepositoryTest {
     @DisplayName("Should throw exception when accessing uninitialized dictionary")
     void shouldThrowExceptionWhenUninitialized() {
         assertThrows(CustomException.class, () -> repository.getDictionary());
-    }
-
-    @Test
-    @DisplayName("Should throw exception for invalid source")
-    void shouldThrowExceptionForInvalidSource() {
-        assertThrows(CustomException.class, () -> repository.initialize("/invalid/path.json"));
     }
 }

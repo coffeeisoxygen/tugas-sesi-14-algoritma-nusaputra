@@ -3,13 +3,13 @@ package com.coffeecode.search;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.coffeecode.model.Word;
+import com.coffeecode.core.model.DictionaryEntry;
 
 public class BinarySearch implements Searchable {
     private static final Logger logger = LoggerFactory.getLogger(BinarySearch.class);
 
     @Override
-    public int search(Word[] dictionary, String target, SearchType type) {
+    public int search(DictionaryEntry[] dictionary, String target, SearchType type) {
         logger.debug("Performing binary search for '{}' using {}", target, type);
 
         int left = 0;
