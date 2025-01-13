@@ -2,6 +2,9 @@ package com.coffeecode.core.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.coffeecode.core.models.DictionaryEntry;
 import com.coffeecode.core.models.Language;
 import com.coffeecode.core.repository.DictionaryRepository;
@@ -14,6 +17,8 @@ import com.coffeecode.core.service.sort.SortResult;
 import com.coffeecode.core.service.sort.SortingStrategy;
 
 public class BinarySearchDictionaryService {
+    private static final Logger logger = LoggerFactory.getLogger(BinarySearchDictionaryService.class);
+    private static final String PERFORMANCE_MARKER = "PERFORMANCE";
     private final DictionaryRepository repository;
     private final SearchStrategy searchStrategy;
     private final SortingStrategy sortStrategy;
@@ -29,20 +34,48 @@ public class BinarySearchDictionaryService {
     }
 
     public void initialize() {
-        List<DictionaryEntry> entries = repository.loadEntries();
-        lastSortResult = sortStrategy.sort(entries, Language.ENGLISH);
-        sortedEntries = lastSortResult.getSortedEntries();
-        currentSortLanguage = Language.ENGLISH;
+        long startTime = System.currentTimeMillis();
+        logger.info("Starting dictionary initialization");
+        
+        try {
+            List<DictionaryEntry> entries = repository.loadEntries();
+            logger.debug("Loaded {} dictionary entries", entries.size());
+            
+            lastSortResult = sortStrategy.sort(entries, Language.ENGLISH);
+            sortedEntries = lastSortResult.getSortedEntries();
+            currentSortLanguage = Language.ENGLISH;
+            
+            long endTime = System.currentTimeMillis();
+            logger.info(PERFORMANCE_MARKER, "Initialization completed in {}ms", (endTime - startTime));
+        } catch (Exception e) {
+            logger.error("Failed to initialize dictionary", e);
+            throw e;
+        }
     }
 
     public SearchResult searchWord(String word, Language from) {
-        if (currentSortLanguage != from) {
-            lastSortResult = sortStrategy.sort(sortedEntries, from);
-            sortedEntries = lastSortResult.getSortedEntries();
-            currentSortLanguage = from;
+        long startTime = System.currentTimeMillis();
+        logger.info("Search request: word='{}', language={}", word, from);
+        
+        try {
+            if (currentSortLanguage != from) {
+                logger.debug("Resorting dictionary to {}", from);
+                lastSortResult = sortStrategy.sort(sortedEntries, from);
+                sortedEntries = lastSortResult.getSortedEntries();
+                currentSortLanguage = from;
+            }
+            
+            lastSearchResult = searchStrategy.search(sortedEntries, word, from);
+            
+            long endTime = System.currentTimeMillis();
+            logger.info(PERFORMANCE_MARKER, "Search completed in {}ms. Found={}", 
+                (endTime - startTime), lastSearchResult.getEntry().isPresent());
+            
+            return lastSearchResult;
+        } catch (Exception e) {
+            logger.error("Search failed for word: {}", word, e);
+            throw e;
         }
-        lastSearchResult = searchStrategy.search(sortedEntries, word, from);
-        return lastSearchResult;
     }
 
     public List<String> getSortSteps() {

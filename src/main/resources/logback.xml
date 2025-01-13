@@ -4,9 +4,10 @@
     <property name="LOG_PATH" value="logs"/>
     <property name="LOG_ARCHIVE" value="${LOG_PATH}/archive"/>
 
-    <!-- Pattern Layout -->
-    <property name="PATTERN_CONSOLE" value="%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%logger{36}) - %msg%n"/>
-    <property name="PATTERN_FILE" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
+    <!-- Enhanced Pattern Layouts -->
+    <property name="PATTERN_CONSOLE" value="%d{HH:mm:ss.SSS} %highlight(%-5level) [%thread] %cyan(%logger{36}:%line) - %msg%n"/>
+    <property name="PATTERN_FILE" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36}:%line - %msg%n"/>
+    <property name="PATTERN_PERFORMANCE" value="%d{HH:mm:ss.SSS} %-5level Performance - %msg%n"/>
 
     <!-- Console Appender -->
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
@@ -15,7 +16,19 @@
         </encoder>
     </appender>
 
-    <!-- Rolling File Appender -->
+    <!-- Performance File Appender -->
+    <appender name="PerformanceFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/performance.log</file>
+        <encoder>
+            <pattern>${PATTERN_PERFORMANCE}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_ARCHIVE}/performance-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Application File Appender -->
     <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_PATH}/application.log</file>
         <encoder>
@@ -36,12 +49,16 @@
         <discardingThreshold>0</discardingThreshold>
     </appender>
 
-    <!-- Enable debug for com.coffeecode package -->
-    <logger name="com.coffeecode" level="INFO"/>
+    <!-- Loggers -->
+    <logger name="com.coffeecode" level="DEBUG"/>
+    <logger name="com.coffeecode.core.performance" level="INFO" additivity="false">
+        <appender-ref ref="PerformanceFile"/>
+        <appender-ref ref="Console"/>
+    </logger>
 
     <!-- Root Logger -->
     <root level="INFO">
         <appender-ref ref="Console"/>
-        <appender-ref ref="RollingFile"/>
+        <appender-ref ref="Async"/>
     </root>
 </configuration>

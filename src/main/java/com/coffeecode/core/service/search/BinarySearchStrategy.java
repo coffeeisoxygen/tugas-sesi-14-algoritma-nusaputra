@@ -4,14 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.coffeecode.core.models.DictionaryEntry;
 import com.coffeecode.core.models.Language;
 
 public class BinarySearchStrategy implements SearchStrategy {
+    private static final Logger logger = LoggerFactory.getLogger(BinarySearchStrategy.class);
     private List<String> steps;
 
     @Override
     public SearchResult search(List<DictionaryEntry> entries, String word, Language language) {
+        logger.debug("Starting binary search for '{}' in {} entries", word, entries.size());
         steps = new ArrayList<>();
         steps.add(String.format("Starting binary search for: %s", word));
 
@@ -28,12 +33,14 @@ public class BinarySearchStrategy implements SearchStrategy {
             String midWord = getWord(midEntry, language);
 
             steps.add(String.format("Comparing with index %d: %s", mid, midWord));
+            logger.trace("Comparing '{}' with '{}' at index {}", word, midWord, mid);
 
             // Case insensitive comparison
             int comparison = word.toLowerCase().compareTo(midWord.toLowerCase());
 
             if (comparison == 0) {
                 steps.add("Word found!");
+                logger.debug("Search completed. Word was found");
                 return new SearchResult(Optional.of(midEntry), steps);
             }
 
@@ -47,6 +54,7 @@ public class BinarySearchStrategy implements SearchStrategy {
         }
 
         steps.add("Word not found");
+        logger.debug("Search completed. Word was not found");
         return new SearchResult(Optional.empty(), steps);
     }
 
