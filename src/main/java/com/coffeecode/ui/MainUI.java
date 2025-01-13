@@ -1,7 +1,11 @@
 package com.coffeecode.ui;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class MainUI extends JFrame {
     private WordsPanel wordsPanel;

@@ -19,10 +19,10 @@ public class WordsPanel extends JPanel {
     }
 
     private void initializeTable() {
-        String[] columnNames = {"English", "Indonesian"};
+        String[] columnNames = { "English", "Indonesian" };
         tableModel = new DefaultTableModel(columnNames, 0);
         wordsTable = new JTable(tableModel);
-        
+
         // Add sample data
         addSampleData();
 
@@ -31,8 +31,9 @@ public class WordsPanel extends JPanel {
     }
 
     private void addSampleData() {
-        tableModel.addRow(new Object[]{"apple", "apel"});
-        tableModel.addRow(new Object[]{"banana", "pisang"});
-        tableModel.addRow(new Object[]{"orange", "jeruk"});
+        tableModel.addRow(new Object[] { "apple", "apel" });
+        tableModel.addRow(new Object[] { "banana", "pisang" });
+        tableModel.addRow(new Object[] { "orange", "jeruk" });
     }
+
 }
