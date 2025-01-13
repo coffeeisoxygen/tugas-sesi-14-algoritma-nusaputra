@@ -1,4 +1,4 @@
-package com.coffeecode.core.service.interfaces;
+package com.coffeecode.core.service;
 
 import java.util.List;
 
@@ -7,8 +7,6 @@ import com.coffeecode.core.models.Language;
 
 public interface DictionaryService {
     List<DictionaryEntry> getAllEntries();
-
-    String translate(String word, Language from, Language to);
-
-    void validateWord(String word, Language language);
+    String findTranslation(String word, Language from, Language to);
+    List<String> getSearchSteps();
 }

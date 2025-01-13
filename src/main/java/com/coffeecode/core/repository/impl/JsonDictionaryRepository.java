@@ -1,6 +1,7 @@
 package com.coffeecode.core.repository.impl;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,7 +11,7 @@ import com.coffeecode.core.config.AppConfig;
 import com.coffeecode.core.exception.CustomException;
 import com.coffeecode.core.models.DictionaryEntry;
 import com.coffeecode.core.models.DictionaryWrapper;
-import com.coffeecode.core.repository.interfaces.DictionaryRepository;
+import com.coffeecode.core.repository.DictionaryRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonDictionaryRepository implements DictionaryRepository {
@@ -27,19 +28,14 @@ public class JsonDictionaryRepository implements DictionaryRepository {
             File file = new File(AppConfig.JSON_RESOURCE_PATH);
             logger.info("Loading dictionary from: {}", file.getAbsolutePath());
 
-            if (!file.exists()) {
-                throw new CustomException("Dictionary file not found");
-            }
-
             DictionaryWrapper wrapper = objectMapper.readValue(file, DictionaryWrapper.class);
+            logger.info("Loaded {} entries", wrapper.getDictionary().size());
+
             return wrapper.getDictionary();
-        } catch (Exception e) {
+        } catch (IOException e) {
+            logger.error("Failed to load dictionary", e);
             throw new CustomException("Failed to load dictionary", e);
         }
     }
 
-    @Override
-    public void saveEntries(List<DictionaryEntry> entries) {
-        // Implementation for future use
-    }
 }

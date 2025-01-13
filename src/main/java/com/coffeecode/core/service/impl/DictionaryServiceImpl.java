@@ -1,16 +1,14 @@
 package com.coffeecode.core.service.impl;
 
-import com.coffeecode.core.service.interfaces.DictionaryService;
-import com.coffeecode.core.models.Language;
-import com.coffeecode.core.repository.interfaces.DictionaryRepository;
-
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.coffeecode.core.exception.CustomException;
 import com.coffeecode.core.models.DictionaryEntry;
+import com.coffeecode.core.models.Language;
+import com.coffeecode.core.repository.DictionaryRepository;
+import com.coffeecode.core.service.DictionaryService;
 
 public class DictionaryServiceImpl implements DictionaryService {
     private static final Logger logger = LoggerFactory.getLogger(DictionaryServiceImpl.class);
@@ -26,17 +24,15 @@ public class DictionaryServiceImpl implements DictionaryService {
     }
 
     @Override
-    public String translate(String word, Language from, Language to) {
-        validateWord(word, from);
-        // Implementation for translation
-        return null;
+    public String findTranslation(String word, Language from, Language to) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findTranslation'");
     }
 
     @Override
-    public void validateWord(String word, Language language) {
-        if (word == null || word.trim().isEmpty()) {
-            throw new CustomException("Word cannot be empty");
-        }
+    public List<String> getSearchSteps() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getSearchSteps'");
     }
 
 }
