@@ -1,4 +1,4 @@
-package com.coffeecode.exception;
+package com.coffeecode.core.exception;
 
 public class CustomException extends RuntimeException {
     public CustomException(String message) {

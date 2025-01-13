@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import com.coffeecode.core.models.DictionaryEntry;
+import com.coffeecode.core.repository.impl.JsonDictionaryRepository;
 
 class JsonDictionaryRepositoryTest {
     private final JsonDictionaryRepository repository = new JsonDictionaryRepository();
