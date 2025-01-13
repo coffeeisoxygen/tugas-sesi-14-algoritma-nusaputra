@@ -1,0 +1,40 @@
+@startuml binary-search-sequence
+
+skinparam backgroundColor #F5F5F5
+skinparam sequenceBackgroundColor #A9DCDF
+skinparam sequenceBorderColor #000000
+
+title Binary Search - Sequence Diagram
+
+actor Client
+participant "BinarySearch" as BS
+participant "Array" as Arr
+
+Client -> BS: search(array, target)
+activate BS
+
+BS -> Arr: get length()
+activate Arr
+Arr --> BS: length
+deactivate Arr
+
+loop while left <= right
+    BS -> BS: calculate middle
+    BS -> Arr: get element[middle]
+    activate Arr
+    Arr --> BS: element
+    deactivate Arr
+    
+    alt element == target
+        BS --> Client: return middle
+    else element < target
+        BS -> BS: left = middle + 1
+    else element > target
+        BS -> BS: right = middle - 1
+    end
+end
+
+BS --> Client: return -1
+deactivate BS
+
+@enduml
