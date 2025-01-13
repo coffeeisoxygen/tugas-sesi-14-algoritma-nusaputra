@@ -1,19 +1,21 @@
 package com.coffeecode;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Slf4j
 public class App {
+    private static final Logger logger = LoggerFactory.getLogger(App.class);
+
     public static void main(String[] args) {
-        log.info("Starting application...");
-        log.debug("Debug message");
-        log.warn("Warning message");
-        log.error("Error message");
-        
+        logger.info("Starting application...");
+        logger.debug("Debug message");
+        logger.warn("Warning message");
+        logger.error("Error message");
+
         try {
             throw new RuntimeException("Test exception");
         } catch (Exception e) {
-            log.error("Caught exception", e);
+            logger.error("Caught exception", e);
         }
     }
 }

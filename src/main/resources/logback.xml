@@ -42,6 +42,6 @@
     <!-- Root Logger -->
     <root level="INFO">
         <appender-ref ref="Console"/>
-        <appender-ref ref="Async"/>
+        <appender-ref ref="RollingFile"/>
     </root>
 </configuration>
