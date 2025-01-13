@@ -1,0 +1,5 @@
+# Created at 2025-01-13T08:31:31.281
+Boot Manifest-JAR contains absolute paths in classpath 'F:\Tugas-campus\binary-search\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+
