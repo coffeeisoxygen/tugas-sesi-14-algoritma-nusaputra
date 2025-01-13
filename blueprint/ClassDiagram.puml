@@ -1,0 +1,10 @@
+@startuml class-diagram
+
+class Dictionary {
+    +string[] words {get}
+    +void addWord(string word) {private}
+    +string[] getWords() {get}
+}
+
+
+@enduml
