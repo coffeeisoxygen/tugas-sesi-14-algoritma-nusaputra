@@ -2,6 +2,7 @@ com\coffeecode\App.class
 com\coffeecode\service\DictionaryService.class
 com\coffeecode\core\repository\DictionaryRepository.class
 com\coffeecode\sort\MergeSort.class
+com\coffeecode\input\InputHandler.class
 com\coffeecode\sort\SortType.class
 com\coffeecode\search\Searchable.class
 com\coffeecode\core\loader\DictionaryLoader.class
