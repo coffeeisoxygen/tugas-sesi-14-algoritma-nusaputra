@@ -1,4 +1,4 @@
-com\coffeecode\repository\DictionaryRepositoryTest.class
-com\coffeecode\AppTest.class
 com\coffeecode\loader\JsonDictionaryLoaderTest.class
 com\coffeecode\model\WordTest.class
+com\coffeecode\AppTest.class
+com\coffeecode\repository\DictionaryRepositoryTest.class
