@@ -17,6 +17,9 @@ import com.coffeecode.core.service.search.SearchStrategy;
 import com.coffeecode.core.service.sort.MergeSortStrategy;
 import com.coffeecode.core.service.sort.SortResult;
 import com.coffeecode.core.service.sort.SortingStrategy;
+import com.coffeecode.core.events.DictionaryEvent;
+import com.coffeecode.core.events.DictionaryEventPublisher;
+import com.coffeecode.core.events.DictionaryEventType;
 
 public class BinarySearchDictionaryService {
     private static final Logger logger = LoggerFactory.getLogger(BinarySearchDictionaryService.class);
@@ -36,6 +39,12 @@ public class BinarySearchDictionaryService {
     }
 
     public void initialize() {
+        DictionaryEventPublisher.publish(new DictionaryEvent(
+            DictionaryEventType.DICTIONARY_LOADED,
+            "Loading dictionary...",
+            null
+        ));
+
         long startTime = System.currentTimeMillis();
         logger.info("Starting dictionary initialization");
         
@@ -53,9 +62,21 @@ public class BinarySearchDictionaryService {
             logger.error("Failed to initialize dictionary", e);
             throw e;
         }
+
+        DictionaryEventPublisher.publish(new DictionaryEvent(
+            DictionaryEventType.DICTIONARY_LOADED,
+            "Dictionary loaded successfully",
+            sortedEntries.size()
+        ));
     }
 
     public SearchResult searchWord(String word, Language from) {
+        DictionaryEventPublisher.publish(new DictionaryEvent(
+            DictionaryEventType.SEARCH_STARTED,
+            "Starting search for: " + word,
+            from
+        ));
+
         long startTime = System.currentTimeMillis();
         logger.info("Search request: word='{}', language={}", word, from);
         
@@ -73,6 +94,12 @@ public class BinarySearchDictionaryService {
             
             long endTime = System.currentTimeMillis();
             logger.info(PERFORMANCE, "Total search operation completed in {}ms", (endTime - startTime));
+            
+            DictionaryEventPublisher.publish(new DictionaryEvent(
+                DictionaryEventType.SEARCH_COMPLETED,
+                "Search completed",
+                lastSearchResult
+            ));
             
             return lastSearchResult;
         } catch (Exception e) {
