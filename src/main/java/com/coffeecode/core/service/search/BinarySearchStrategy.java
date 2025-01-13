@@ -22,6 +22,11 @@ public class BinarySearchStrategy implements SearchStrategy {
             int mid = left + (right - left) / 2;
             DictionaryEntry midEntry = entries.get(mid);
             String midWord = language == Language.INDONESIAN ? midEntry.getIndonesian() : midEntry.getEnglish();
+            if (midWord == null) {
+                steps.add("Skipping null entry");
+                left = mid + 1;
+                continue;
+            }
 
             steps.add(String.format("Comparing with index %d: %s", mid, midWord));
 
