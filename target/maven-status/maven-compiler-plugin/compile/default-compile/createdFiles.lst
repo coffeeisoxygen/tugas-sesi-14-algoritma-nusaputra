@@ -1,0 +1,6 @@
+com\coffeecode\App.class
+com\coffeecode\model\Word.class
+com\coffeecode\exception\CustomException.class
+com\coffeecode\repository\DictionaryRepository.class
+com\coffeecode\loader\JsonDictionaryLoader.class
+com\coffeecode\loader\DictionaryLoader.class
