@@ -51,6 +51,22 @@
         {"english": "snack", "indonesian": "snack"},
         {"english": "breakfast", "indonesian": "sarapan"},
         {"english": "lunch", "indonesian": "makan siang"},
+        {"english": "cat", "indonesian": "kucing"},
+        {"english": "dog", "indonesian": "anjing"},
+        {"english": "rabbit", "indonesian": "kelinci"},
+        {"english": "bird", "indonesian": "burung"},
+        {"english": "fish", "indonesian": "ikan"},
+        {"english": "horse", "indonesian": "kuda"},
+        {"english": "cow", "indonesian": "sapi"},
+        {"english": "sheep", "indonesian": "domba"},
+        {"english": "pig", "indonesian": "babi"},
+        {"english": "chicken", "indonesian": "ayam"},
+        {"english": "duck", "indonesian": "bebek"},
+        {"english": "dinner", "indonesian": "makan malam"},
+        {"english": "cat", "indonesian": "kucing"},
+        {"english": "dog", "indonesian": "anjing"},
+        {"english": "rabbit", "indonesian": "kelinci"},
+        {"english": "burung", "indonesian": "bird"},
         {"english": "dinner", "indonesian": "makan malam"}
     ]
 }
