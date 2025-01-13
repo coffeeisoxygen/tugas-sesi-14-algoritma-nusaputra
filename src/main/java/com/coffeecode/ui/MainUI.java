@@ -18,12 +18,13 @@ import javax.swing.SwingWorker;
 import com.coffeecode.core.events.DictionaryEvent;
 import com.coffeecode.core.events.DictionaryEventListener;
 import com.coffeecode.core.events.DictionaryEventPublisher;
+import com.coffeecode.core.events.DictionaryEventType;
 import com.coffeecode.core.models.Language;
 import com.coffeecode.core.service.BinarySearchDictionaryService;
 import com.coffeecode.core.service.search.SearchResult;
 
 public class MainUI extends JFrame implements DictionaryEventListener {
-    private final transient BinarySearchDictionaryService service;
+    private final BinarySearchDictionaryService service;
     private final JTextField searchField;
     private final JComboBox<Language> languageCombo;
     private final JTextArea stepsArea;
@@ -33,51 +34,49 @@ public class MainUI extends JFrame implements DictionaryEventListener {
 
     public MainUI() {
         service = new BinarySearchDictionaryService();
-
-        // Setup UI components
         setTitle("Dictionary Binary Search");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout(10, 10));
 
-        // Search Panel
-        JPanel searchPanel = new JPanel(new BorderLayout(5, 5));
+        // Input Panel
+        JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         searchField = new JTextField(20);
         languageCombo = new JComboBox<>(Language.values());
         searchButton = new JButton("Search");
-
-        JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        
         inputPanel.add(new JLabel("Search:"));
         inputPanel.add(searchField);
         inputPanel.add(languageCombo);
         inputPanel.add(searchButton);
-
-        searchPanel.add(inputPanel, BorderLayout.NORTH);
 
         // Results Panel
         JPanel resultsPanel = new JPanel(new BorderLayout(5, 5));
         resultLabel = new JLabel(" ");
         stepsArea = new JTextArea(10, 40);
         stepsArea.setEditable(false);
-
+        
         resultsPanel.add(resultLabel, BorderLayout.NORTH);
         resultsPanel.add(new JScrollPane(stepsArea), BorderLayout.CENTER);
-
-        searchPanel.add(resultsPanel, BorderLayout.CENTER);
 
         // Visualization Panel
         visualizationPanel = new VisualizationPanel();
 
-        // Add to frame
-        add(searchPanel, BorderLayout.NORTH);
+        // Layout
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.add(inputPanel, BorderLayout.NORTH);
+        topPanel.add(resultsPanel, BorderLayout.CENTER);
+        
+        add(topPanel, BorderLayout.NORTH);
         add(visualizationPanel, BorderLayout.CENTER);
 
-        // Add listeners
+        // Event Handlers
         searchButton.addActionListener(e -> performSearch());
-
+        searchField.addActionListener(e -> performSearch());
+        
         // Initialize
+        DictionaryEventPublisher.subscribe(this);
         service.initialize();
-
-        // Display
+        
         pack();
         setLocationRelativeTo(null);
     }
@@ -91,25 +90,18 @@ public class MainUI extends JFrame implements DictionaryEventListener {
             return;
         }
 
-        // Clear previous search
         visualizationPanel.clearVisualization();
         stepsArea.setText("");
         resultLabel.setText("Searching...");
-        
-        // Disable search until complete
         searchButton.setEnabled(false);
-        
-        // Subscribe to events
-        DictionaryEventPublisher.subscribe(this);
-        
-        // Perform search in background
+
         SwingWorker<Void, Void> worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() {
                 service.searchWord(word, language);
                 return null;
             }
-            
+
             @Override
             protected void done() {
                 searchButton.setEnabled(true);
@@ -121,31 +113,21 @@ public class MainUI extends JFrame implements DictionaryEventListener {
     @Override
     public void onDictionaryEvent(DictionaryEvent event) {
         SwingUtilities.invokeLater(() -> {
-            switch (event.type()) {
-                case SEARCH_COMPLETED -> {
-                    SearchResult result = (SearchResult) event.data();
-                    resultLabel.setText(result.getEntry()
-                            .map(entry -> "Found: " + entry.getEnglish() + " = " + entry.getIndonesian())
-                            .orElse("Word not found"));
-                    stepsArea.setText(String.join("\n", result.getSteps()));
-                    visualizationPanel.updateSearchVisualization(result.getSteps());
-                }
-                case DICTIONARY_LOADED -> {
-                    int wordCount = (Integer) event.data();
-                    setTitle("Dictionary Binary Search - " + wordCount + " words loaded");
-                }
-                case SEARCH_STARTED -> {
-                    stepsArea.setText("Searching...");
-                    resultLabel.setText("Searching for: " + event.message());
-                }
-                default -> throw new IllegalArgumentException("Unexpected value: " + event.type());
+            if (event.type() == DictionaryEventType.SEARCH_COMPLETED) {
+                SearchResult result = (SearchResult) event.data();
+                resultLabel.setText(result.getEntry()
+                    .map(entry -> "Found: " + entry.getEnglish() + " = " + entry.getIndonesian())
+                    .orElse("Word not found"));
+                stepsArea.setText(String.join("\n", result.getSteps()));
+                visualizationPanel.updateSearchVisualization(result.getSteps());
+            }
+            else if (event.type() == DictionaryEventType.DICTIONARY_LOADED) {
+                setTitle("Dictionary Binary Search - " + event.data() + " words loaded");
             }
         });
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new MainUI().setVisible(true);
-        });
+        SwingUtilities.invokeLater(() -> new MainUI().setVisible(true));
     }
 }
