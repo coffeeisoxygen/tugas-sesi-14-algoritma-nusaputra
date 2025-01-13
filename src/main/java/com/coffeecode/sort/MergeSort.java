@@ -11,12 +11,11 @@ public class MergeSort implements Sortable {
 
     @Override
     public DictionaryEntry[] sort(DictionaryEntry[] dictionary, SearchType type) {
-        logger.debug("Sorting dictionary by {}", type);
         if (dictionary == null || dictionary.length <= 1)
             return dictionary;
 
-        DictionaryEntry[] temp = new DictionaryEntry[dictionary.length];
-        mergeSort(dictionary, temp, 0, dictionary.length - 1, type);
+        logger.debug("Sorting dictionary by {}", type);
+        mergeSort(dictionary, new DictionaryEntry[dictionary.length], 0, dictionary.length - 1, type);
         return dictionary;
     }
 
@@ -40,20 +39,15 @@ public class MergeSort implements Sortable {
             String word1 = (type == SearchType.ENGLISH) ? temp[i].english() : temp[i].indonesian();
             String word2 = (type == SearchType.ENGLISH) ? temp[j].english() : temp[j].indonesian();
 
-            if (word1.compareTo(word2) <= 0) {
-                arr[k] = temp[i];
-                i++;
+            if (word1.compareToIgnoreCase(word2) <= 0) {
+                arr[k++] = temp[i++];
             } else {
-                arr[k] = temp[j];
-                j++;
+                arr[k++] = temp[j++];
             }
-            k++;
         }
 
         while (i <= mid) {
-            arr[k] = temp[i];
-            k++;
-            i++;
+            arr[k++] = temp[i++];
         }
     }
 }

@@ -10,8 +10,10 @@ public class BinarySearch implements Searchable {
 
     @Override
     public int search(DictionaryEntry[] dictionary, String target, SearchType type) {
-        logger.debug("Performing binary search for '{}' using {}", target, type);
+        if (dictionary == null || target == null)
+            return -1;
 
+        logger.debug("Searching for '{}' using {}", target, type);
         int left = 0;
         int right = dictionary.length - 1;
 
@@ -21,7 +23,7 @@ public class BinarySearch implements Searchable {
                     ? dictionary[mid].english()
                     : dictionary[mid].indonesian();
 
-            int comparison = currentWord.compareTo(target);
+            int comparison = currentWord.compareToIgnoreCase(target);
 
             if (comparison == 0) {
                 logger.debug("Found '{}' at index {}", target, mid);
@@ -35,7 +37,7 @@ public class BinarySearch implements Searchable {
             }
         }
 
-        logger.debug("'{}' not found in dictionary", target);
+        logger.debug("'{}' not found", target);
         return -1;
     }
 }
