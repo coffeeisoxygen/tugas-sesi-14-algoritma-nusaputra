@@ -6,16 +6,20 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 
 import com.coffeecode.core.models.DictionaryEntry;
 import com.coffeecode.core.models.Language;
 
 public class BinarySearchStrategy implements SearchStrategy {
     private static final Logger logger = LoggerFactory.getLogger(BinarySearchStrategy.class);
+    private static final Marker PERFORMANCE = MarkerFactory.getMarker("PERFORMANCE");
     private List<String> steps;
 
     @Override
     public SearchResult search(List<DictionaryEntry> entries, String word, Language language) {
+
         logger.debug("Starting binary search for '{}' in {} entries", word, entries.size());
         steps = new ArrayList<>();
         steps.add(String.format("Starting binary search for: %s", word));
