@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 
 import com.coffeecode.core.models.DictionaryEntry;
 import com.coffeecode.core.models.Language;
@@ -18,7 +20,7 @@ import com.coffeecode.core.service.sort.SortingStrategy;
 
 public class BinarySearchDictionaryService {
     private static final Logger logger = LoggerFactory.getLogger(BinarySearchDictionaryService.class);
-    private static final String PERFORMANCE_MARKER = "PERFORMANCE";
+    private static final Marker PERFORMANCE = MarkerFactory.getMarker("PERFORMANCE");
     private final DictionaryRepository repository;
     private final SearchStrategy searchStrategy;
     private final SortingStrategy sortStrategy;
@@ -46,7 +48,7 @@ public class BinarySearchDictionaryService {
             currentSortLanguage = Language.ENGLISH;
             
             long endTime = System.currentTimeMillis();
-            logger.info(PERFORMANCE_MARKER, "Initialization completed in {}ms", (endTime - startTime));
+            logger.info(PERFORMANCE, "Initialization completed in {}ms", (endTime - startTime));
         } catch (Exception e) {
             logger.error("Failed to initialize dictionary", e);
             throw e;
@@ -59,21 +61,22 @@ public class BinarySearchDictionaryService {
         
         try {
             if (currentSortLanguage != from) {
-                logger.debug("Resorting dictionary to {}", from);
+                logger.info(PERFORMANCE, "Resorting dictionary for {} search", from);
+                long sortStart = System.currentTimeMillis();
                 lastSortResult = sortStrategy.sort(sortedEntries, from);
                 sortedEntries = lastSortResult.getSortedEntries();
                 currentSortLanguage = from;
+                logger.info(PERFORMANCE, "Resort completed in {}ms", System.currentTimeMillis() - sortStart);
             }
-            
+
             lastSearchResult = searchStrategy.search(sortedEntries, word, from);
             
             long endTime = System.currentTimeMillis();
-            logger.info(PERFORMANCE_MARKER, "Search completed in {}ms. Found={}", 
-                (endTime - startTime), lastSearchResult.getEntry().isPresent());
+            logger.info(PERFORMANCE, "Total search operation completed in {}ms", (endTime - startTime));
             
             return lastSearchResult;
         } catch (Exception e) {
-            logger.error("Search failed for word: {}", word, e);
+            logger.error("Search failed", e);
             throw e;
         }
     }

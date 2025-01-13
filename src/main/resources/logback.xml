@@ -7,7 +7,7 @@
     <!-- Enhanced Pattern Layouts -->
     <property name="PATTERN_CONSOLE" value="%d{HH:mm:ss.SSS} %highlight(%-5level) [%thread] %cyan(%logger{36}:%line) - %msg%n"/>
     <property name="PATTERN_FILE" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36}:%line - %msg%n"/>
-    <property name="PATTERN_PERFORMANCE" value="%d{HH:mm:ss.SSS} %-5level Performance - %msg%n"/>
+    <property name="PATTERN_PERFORMANCE" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] - %msg%n"/>
 
     <!-- Console Appender -->
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
@@ -16,12 +16,19 @@
         </encoder>
     </appender>
 
-    <!-- Performance File Appender -->
+    <!-- Performance File Appender with Marker Filter -->
     <appender name="PerformanceFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_PATH}/performance.log</file>
         <encoder>
             <pattern>${PATTERN_PERFORMANCE}</pattern>
         </encoder>
+        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator class="ch.qos.logback.classic.boolex.OnMarkerEvaluator">
+                <marker>PERFORMANCE</marker>
+            </evaluator>
+            <OnMismatch>DENY</OnMismatch>
+            <OnMatch>ACCEPT</OnMatch>
+        </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_ARCHIVE}/performance-%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>7</maxHistory>
