@@ -2,11 +2,10 @@ package com.coffeecode.core.service;
 
 import java.util.List;
 
-import com.coffeecode.core.models.DictionaryEntri;
+import com.coffeecode.core.models.DictionaryEntry;
 
 public interface VocabularyLoadable {
 
-    // Load A raw Dictionary
-    List<DictionaryEntri> loadword();
+    List<DictionaryEntry> loadword();
 
 }
