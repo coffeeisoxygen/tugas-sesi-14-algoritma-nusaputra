@@ -1,4 +1,4 @@
-package com.coffeecode.core.service;
+package com.coffeecode.core.service.impl;
 
 import java.util.List;
 

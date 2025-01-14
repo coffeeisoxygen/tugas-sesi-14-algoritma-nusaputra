@@ -9,7 +9,6 @@ import com.coffeecode.core.exception.DictionaryException;
 import com.coffeecode.core.models.DictionaryEntry;
 import com.coffeecode.core.models.Language;
 import com.coffeecode.core.repository.DictionaryRepository;
-import com.coffeecode.core.service.DictionaryService;
 import com.coffeecode.core.service.search.SearchResult;
 import com.coffeecode.core.service.search.SearchStrategy;
 import com.coffeecode.core.service.sort.SortResult;
